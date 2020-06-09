@@ -1,4 +1,4 @@
-	//Condori Lanza Silvia Eugenia 6164141Lp
+//Condori Lanza Silvia Eugenia 6164141Lp
 
 package UDPej;
 import java.net.DatagramPacket;
@@ -17,12 +17,13 @@ public class ServidorUDP {
 			System.out.println("---- Esperando Solicitudes ----");
 			
 			while(true){
-				/////////////////////RECIBIMOS EL 1er DATAGRAMA DEL CLIENTE////////////////////////
+				//******************RECIBIMOS EL 1er DATAGRAMA DEL CLIENTE***********************//
 				DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024],1024); //Creamos el datagrama, aqui recibiremos el datagrama del cliente
 				socketUDP.receive(paqueteRecibido); //Recibimos el datagrama del cliente
 				String mensajeRecibido =recorte( new String(paqueteRecibido.getData())); // Convertimos el datagrama en cadena, utilizamos el metodo recorte(). para eliminar '#' al final de la cadena
-				//int a = Integer.parseInt(mensajeRecibido); //convertimos la cadena en entero
-				////////////////////////////ENVIAMOS LA RESPUESTA AL CLIENTE//////////////////////////
+				
+						
+				//*********************ENVIAMOS LA RESPUESTA AL CLIENTE*****************//
 				byte mensajeEnviar[] = new byte[5]; //Creamos el byte donde guardaremos el mensaje
 				int palabra = mensajeRecibido.length();
 				String ans = "Respuesta del servidor:  "+palabra+"#"; // La cadena de respuesta del servidor.
@@ -30,8 +31,9 @@ public class ServidorUDP {
 				DatagramPacket paqueteAEnviar = new DatagramPacket(mensajeEnviar,mensajeEnviar.length,paqueteRecibido.getAddress(),paqueteRecibido.getPort());//Creamos el datagrama con nuestro mensaje
 				socketUDP.send(paqueteAEnviar);//Enviamos el datagrama al cliente
 				//System.out.println("r1"+ans);
-				///////////////////////////////////////////////////////////////////////////////////////
-				/////////////IMPRIMOS EN CONSOLA DEL SERVIDOR////////////////////////
+				
+				
+				//******************IMPRIMOS EN CONSOLA DEL SERVIDOR***********************//
 				System.out.println("Datos introducidos por el cliente: "+mensajeRecibido);
 			}
 		}catch(Exception e)
