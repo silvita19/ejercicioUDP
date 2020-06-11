@@ -44,7 +44,8 @@ public class ClienteUDP {
 			
 			
 			//*************IMPRIMIMOS EL MENSAJE DEL SERVIDOR**********//
-			System.out.println(recorte(mensajeRecibido));//La cadena que recibimos de parte del servidor tiene un '#' al final asi que lo recortamos con el metodo 'recorte()'
+			//System.out.println(contPala(mensajeRecibido));
+			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}		
@@ -69,5 +70,28 @@ public class ClienteUDP {
 				}
 			}
 			return m;
-		}	
+		}
+		
+		public static int contPala(String s){
+
+		       int cont = 0;
+
+		       boolean word = false;
+		       int endOfLine = s.length() - 1;
+
+		       for (int i = 0; i < s.length(); i++) {
+		           
+		           if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
+		               word = true;
+		               
+		           } else if (!Character.isLetter(s.charAt(i)) && word) {
+		               cont++;
+		               word = false;
+		              
+		           } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
+		               cont++;
+		           }
+		       }
+		       return (cont);
+		}
 }

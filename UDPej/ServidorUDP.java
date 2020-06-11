@@ -20,12 +20,12 @@ public class ServidorUDP {
 				//******************RECIBIMOS EL 1er DATAGRAMA DEL CLIENTE***********************//
 				DatagramPacket paqueteRecibido = new DatagramPacket(new byte[1024],1024); //Creamos el datagrama, aqui recibiremos el datagrama del cliente
 				socketUDP.receive(paqueteRecibido); //Recibimos el datagrama del cliente
-				String mensajeRecibido =recorte( new String(paqueteRecibido.getData())); // Convertimos el datagrama en cadena, utilizamos el metodo recorte(). para eliminar '#' al final de la cadena
+				int mensajeRecibido =contPala( new String(paqueteRecibido.getData())); // Convertimos el datagrama en cadena, utilizamos el metodo recorte(). para eliminar '#' al final de la cadena
 				
 						
 				//*********************ENVIAMOS LA RESPUESTA AL CLIENTE*****************//
 				byte mensajeEnviar[] = new byte[5]; //Creamos el byte donde guardaremos el mensaje
-				int palabra = mensajeRecibido.length();
+				int palabra = mensajeRecibido-1;
 				String ans = "Respuesta del servidor:  "+palabra+"#"; // La cadena de respuesta del servidor.
 				mensajeEnviar = ans.getBytes();//convertimos la cadena en bytes y lo guardamos en el vector de bytes
 				DatagramPacket paqueteAEnviar = new DatagramPacket(mensajeEnviar,mensajeEnviar.length,paqueteRecibido.getAddress(),paqueteRecibido.getPort());//Creamos el datagrama con nuestro mensaje
@@ -34,7 +34,7 @@ public class ServidorUDP {
 				
 				
 				//******************IMPRIMOS EN CONSOLA DEL SERVIDOR***********************//
-				System.out.println("Datos introducidos por el cliente: "+mensajeRecibido);
+				System.out.println("Palabras introducidos por el cliente: "+mensajeRecibido);
 			}
 		}catch(Exception e)
 			{ 	
@@ -50,7 +50,7 @@ public class ServidorUDP {
 			e.printStackTrace();
 		}
 	}
-	public String recorte(String s){
+	/*public String recorte(String s){
 		String m="";
 		char c[]=s.toCharArray();
 		boolean sw=true;
@@ -62,5 +62,29 @@ public class ServidorUDP {
 			}
 		}
 		return m;
-	}	
+	}*/
+	
+	public static int contPala(String s){
+
+	       int cont = 0;
+
+	       boolean word = false;
+	       int endOfLine = s.length() - 1;
+
+	       for (int i = 0; i < s.length(); i++) {
+	           
+	           if (Character.isLetter(s.charAt(i)) && i != endOfLine) {
+	               word = true;
+	              
+	           } else if (!Character.isLetter(s.charAt(i)) && word) {
+	               cont++;
+	               word = false;
+	               
+	           } else if (Character.isLetter(s.charAt(i)) && i == endOfLine) {
+	               cont++;
+	           }
+	       }
+	       return cont;
+	}
+
 }
